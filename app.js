@@ -24,23 +24,26 @@ app
 server.listen(port, () => console.log(`Listening on port ${port}!`))
 
 
-
+const users = {}
 
 const chat = io.of('/chat')
 chat.on('connection', (socket) => {
-  socket.join('me room');
-  // socket.emit('message', {
-  //     that: 'only'
-  //   , '/chat': 'will get'
-  // });
-  // chat.emit('message', {
-  //     everyone: 'in'
-  //   , '/chat': 'will get'
-  // });
+  socket.on('new-user', username => {
+    users[socket.id] = username
+    socket.broadcast.emit('user-joined', username)
+  })
 
+  socket.on('disconnect', () => {
+    socket.broadcast.emit('user-left', users[socket.id])
+    delete users[socket.id]
+  })
 
-  chat.to('me room').emit('message', { will: 'be received by everyone'});
-  console.log('chat');
+  socket.on('send-chat-message', message => {
+    socket.broadcast.emit('chat-message', {
+      username: users[socket.id],
+      message: message
+    })
+  })
 })
 
 const news = io.of('/news')
@@ -48,3 +51,19 @@ news.on('connection', (socket) => {
   console.log('news');
 })
 news.emit('here\'s', 'news!');
+
+
+
+//  ROOMS
+//socket.join('me room');
+// socket.emit('message', {
+//     that: 'only'
+//   , '/chat': 'will get'
+// });
+// chat.emit('message', {
+//     everyone: 'in'
+//   , '/chat': 'will get'
+// });
+
+
+// chat.to('me room').emit('message', { will: 'be received by everyone'});
