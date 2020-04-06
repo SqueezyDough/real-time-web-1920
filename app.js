@@ -23,6 +23,28 @@ app
 
 server.listen(port, () => console.log(`Listening on port ${port}!`))
 
-io.on('connection', () => {
-    console.log('user connected')
-});
+
+
+
+const chat = io.of('/chat')
+chat.on('connection', (socket) => {
+  socket.join('me room');
+  // socket.emit('message', {
+  //     that: 'only'
+  //   , '/chat': 'will get'
+  // });
+  // chat.emit('message', {
+  //     everyone: 'in'
+  //   , '/chat': 'will get'
+  // });
+
+
+  chat.to('me room').emit('message', { will: 'be received by everyone'});
+  console.log('chat');
+})
+
+const news = io.of('/news')
+news.on('connection', (socket) => {
+  console.log('news');
+})
+news.emit('here\'s', 'news!');
