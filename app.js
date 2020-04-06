@@ -1,11 +1,12 @@
 'use strict';
-const express = require('express')
-const path = require('path')
-const exphbs = require('express-handlebars')
-const router = require('./routes/index.router')
-const app = express()
-
-const port = process.env.PORT || 3000;
+const express = require('express'),
+      path = require('path'),
+      exphbs = require('express-handlebars'),
+      router = require('./routes/index.router'),
+      app = express(),
+      server = require('http').createServer(app),
+      io = require('socket.io')(server),
+      port = process.env.PORT || 3000;
 
 require("dotenv").config();
 require("./views/helpers");
@@ -19,4 +20,9 @@ app
         partialsDir: path.join(__dirname, 'views/partials')
     }))
     .use('/', router)
-    .listen(port, () => console.log(`Listening on port ${port}!`))
+
+server.listen(port, () => console.log(`Listening on port ${port}!`))
+
+io.on('connection', () => {
+    console.log('user connected')
+});
