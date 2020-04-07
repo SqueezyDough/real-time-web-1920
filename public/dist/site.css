@@ -106,7 +106,7 @@ em {
 
 .message {
   word-wrap: break-word;
-  max-width: 40%;
+  max-width: 45%;
   padding: 1rem;
   margin: .5rem 0;
   border: 1px solid #FF0449; }
@@ -123,3 +123,8 @@ em {
     align-self: flex-start;
     background-color: #C60036;
     box-shadow: #040D2C 4px 4px 0 0; }
+
+.video-message {
+  padding: 0;
+  width: 100%;
+  height: auto; }

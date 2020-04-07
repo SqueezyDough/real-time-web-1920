@@ -45,7 +45,7 @@
 
 .message {
     word-wrap: break-word;
-    max-width: 40%;
+    max-width: 45%;
     padding: 1rem;
     margin: .5rem 0;
     border: 1px solid $red;
@@ -68,4 +68,10 @@
         background-color: $darkRed;
         box-shadow: $darkBlue 4px 4px 0 0;
     }
+}
+
+.video-message {
+    padding: 0;
+    width: 100%;
+    height: auto;
 }
