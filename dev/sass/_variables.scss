@@ -1,0 +1,35 @@
+@font-face {
+    font-family: "Inconsolata";
+    src: url("../fonts/Inconsolata/Inconsolata-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Inconsolata-bold";
+    src: url("../fonts/Inconsolata/Inconsolata-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Avenir-Roman";
+    src: url("../fonts/Avenir/AvenirLTStd-Roman.otf");
+}
+
+@font-face {
+    font-family: "Avenir-Heavy";
+    src: url("../fonts/Avenir/AvenirLTStd-Heavy.ttf");
+}
+
+$red: #FF0449;
+$darkRed: #C60036;
+$lightBlue: #BEC6D8;
+$mediumBlue: #7E8BA7;
+$blue: #08174A;
+$darkBlue: #040D2C;
+$yellow: #EFD609;
+
+$header-font-size: 3.2rem;
+$subheader-font-size: 1.5rem;
+$body-font-size: 1rem;
+
+$header-font-family: 'Avenir-Heavy', sans-serif;
+$body-font-family: 'Avenir-Roman', sans-serif;
+$contrast-font-family: 'Inconsolata-bold', monospace;

@@ -1,0 +1,71 @@
+.send-container {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 40rem;
+    padding: 1rem 1rem 1rem 0;
+}
+
+.message-input {
+    -webkit-appearance: none;
+            appearance: none;
+
+    flex-grow: 1;
+    padding: .5rem 1.5rem;
+    margin-right: 1rem;
+    font-family: $contrast-font-family;
+    font-size: $body-font-size;
+    color: $darkBlue;
+    border: 1px solid transparent;
+    border-radius: 30px;
+    box-shadow: $darkBlue 4px 4px 0 0;
+    text-decoration: none;
+    transition: .2s;
+    transition-property: transform, flex-grow, background-color, color;
+    cursor: pointer;
+
+    &:hover, &:focus {
+        flex-grow: 1;
+        background-color: $yellow;
+        border: 1px solid $darkBlue;
+        color: $darkBlue;
+    }
+
+    &::placeholder {
+        color: $darkBlue;
+    }
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    word-wrap: break-word;
+    max-width: 40%;
+    padding: 1rem;
+    margin: .5rem 0;
+    border: 1px solid $red;
+
+    &.-server {
+        text-transform: uppercase;
+        font-family: $contrast-font-family;
+        padding: 0;
+        background-color: $yellow;
+    }
+
+    &.-self {
+        align-self: flex-end;
+        background-color: $yellow;
+        box-shadow: $darkBlue 4px 4px 0 0;
+    }
+
+    &.-member {
+        align-self: flex-start;
+        background-color: $darkRed;
+        box-shadow: $darkBlue 4px 4px 0 0;
+    }
+}

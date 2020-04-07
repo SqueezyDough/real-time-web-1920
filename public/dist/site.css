@@ -1,2 +1,125 @@
+@font-face {
+  font-family: "Inconsolata";
+  src: url("../fonts/Inconsolata/Inconsolata-Regular.ttf"); }
+
+@font-face {
+  font-family: "Inconsolata-bold";
+  src: url("../fonts/Inconsolata/Inconsolata-Bold.ttf"); }
+
+@font-face {
+  font-family: "Avenir-Roman";
+  src: url("../fonts/Avenir/AvenirLTStd-Roman.otf"); }
+
+@font-face {
+  font-family: "Avenir-Heavy";
+  src: url("../fonts/Avenir/AvenirLTStd-Heavy.ttf"); }
+
 body {
-  border: 10px solid red; }
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: .5rem .5rem 6rem .5rem;
+  background-color: #FF0449;
+  font-family: "Avenir-Roman", sans-serif;
+  color: #040D2C; }
+
+* {
+  box-sizing: border-box; }
+
+em {
+  background-color: #EFD609;
+  font-family: "Inconsolata-bold", monospace;
+  text-transform: uppercase;
+  font-style: normal; }
+  em::selection {
+    background-color: white; }
+
+.btn, .-primary, .-secondary {
+  -webkit-appearance: none;
+  appearance: none;
+  padding: .5rem 1.5rem;
+  font-family: "Inconsolata-bold", monospace;
+  font-size: 1rem;
+  color: #040D2C;
+  border-radius: 5px 0 0 0;
+  text-align: center;
+  text-decoration: none;
+  transition: .2s;
+  transition-property: flex-grow, background-color, color;
+  cursor: pointer; }
+  .btn:hover, .-primary:hover, .-secondary:hover, .btn:focus, .-primary:focus, .-secondary:focus {
+    background-color: #EFD609;
+    border: 1px solid #040D2C;
+    color: #040D2C; }
+
+.-primary {
+  border-top: 1px solid #040D2C;
+  border-right: 1px solid #FF0449;
+  border-bottom: 1px solid #FF0449;
+  border-left: 1px solid #040D2C;
+  box-shadow: #040D2C 4px 4px 0 0;
+  background-color: #040D2C;
+  color: #FF0449;
+  text-transform: uppercase; }
+
+.-secondary {
+  border: 1px solid #040D2C;
+  box-shadow: #040D2C 4px 4px 0 0;
+  background-color: transparent;
+  text-transform: uppercase; }
+
+.send-container {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 40rem;
+  padding: 1rem 1rem 1rem 0; }
+
+.message-input {
+  -webkit-appearance: none;
+  appearance: none;
+  flex-grow: 1;
+  padding: .5rem 1.5rem;
+  margin-right: 1rem;
+  font-family: "Inconsolata-bold", monospace;
+  font-size: 1rem;
+  color: #040D2C;
+  border: 1px solid transparent;
+  border-radius: 30px;
+  box-shadow: #040D2C 4px 4px 0 0;
+  text-decoration: none;
+  transition: .2s;
+  transition-property: transform, flex-grow, background-color, color;
+  cursor: pointer; }
+  .message-input:hover, .message-input:focus {
+    flex-grow: 1;
+    background-color: #EFD609;
+    border: 1px solid #040D2C;
+    color: #040D2C; }
+  .message-input::placeholder {
+    color: #040D2C; }
+
+.message-container {
+  display: flex;
+  flex-direction: column; }
+
+.message {
+  word-wrap: break-word;
+  max-width: 40%;
+  padding: 1rem;
+  margin: .5rem 0;
+  border: 1px solid #FF0449; }
+  .message.-server {
+    text-transform: uppercase;
+    font-family: "Inconsolata-bold", monospace;
+    padding: 0;
+    background-color: #EFD609; }
+  .message.-self {
+    align-self: flex-end;
+    background-color: #EFD609;
+    box-shadow: #040D2C 4px 4px 0 0; }
+  .message.-member {
+    align-self: flex-start;
+    background-color: #C60036;
+    box-shadow: #040D2C 4px 4px 0 0; }
