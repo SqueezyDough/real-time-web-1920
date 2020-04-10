@@ -15,3 +15,8 @@ To better understand socket.IO I've made a chat app. Users can send messages und
 ### User messages
 * Own messages appear on the right
 * Other messages appear on the left
+
+# Install notes
+1. Clone this repository
+2. Install dependancies: `npm install`
+3. Run application: `npm run start`
