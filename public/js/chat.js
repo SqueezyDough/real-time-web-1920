@@ -1,4 +1,4 @@
-const socket = io('/chat'),
+const socket = io('/room'),
       messageContainer = document.getElementById('message-container'),
       messageForm = document.getElementById('send-container'),
       messageInput = document.getElementById('message-input'),
@@ -67,8 +67,6 @@ function appendGiphy(data) {
     } else {
         elUsername.innerHTML = `${username}: `
     }
-
-
 
     const elVideo = document.createElement('video')
     elVideo.src = giphyUrl
