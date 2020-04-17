@@ -8,7 +8,12 @@ exports.getRandomGiphy = async topic => {
   
     return giphies.data[Math.floor(Math.random() * giphies.data.length)].images.looping.mp4;
 }
-  
+
+exports.getRandomSong = async () => {
+    
+}
+
+
 function fetchData(url) {
     return fetch(url)
         .then(data => data.text())
