@@ -1,22 +1,9 @@
-# The ethical corona waiting room
+# Song guessing game
 
-To better understand socket.IO I've made a chat app. Users can send messages under a username or use a generated username. It's also possible to send a rabdom Corona gif using the /giphy command.
+## Data life cycle diagram
+![DLC](https://user-images.githubusercontent.com/33430653/79760836-e9a02480-8320-11ea-8563-d67f2a840f92.png)
 
-## Commands
-- [X] `/giphy`: Send a random Corona Gif
-- [ ] `/news`: Send a random Corona news article
-
-## Messages
-### Server messages
-* You joined as `[username]`
-* `[username]` has joined the room
-* `[username]` has left the room
-
-### User messages
-* Own messages appear on the right
-* Other messages appear on the left
-
-# Install notes
+## Install notes
 1. Clone this repository
 2. Install dependancies: `npm install`
 3. Run application: `npm run start`
