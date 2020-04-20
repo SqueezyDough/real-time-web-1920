@@ -1,14 +1,32 @@
-const api = require('./api.controller')
+const spotifyAPi = require('./spotify-api.controller')
 const users = {}
 
 exports.init = io => {  
-    const chat = io.of('/room')
-
-    chat.on('connection', (socket) => {
-       // new user
+    io.on('connection', (socket) => {
+        // new user
         socket.on('new-user', username => {
             users[socket.id] = username
-            socket.broadcast.emit('user-joined', username)
+            console.log(socket.id)
+
+            socket.broadcast.emit('user-joined', username)    
+        })
+
+        // disconnnect
+        socket.on('disconnect', () => {
+            socket.broadcast.emit('user-left', users[socket.id])
+            delete users[socket.id]
+        })
+    })
+}
+
+exports.room = io => {  
+    io.on('connection', (socket) => {
+        // new user
+        socket.on('new-user', username => {
+            users[socket.id] = username
+            console.log(socket.id)
+
+            socket.broadcast.emit('user-joined', username)    
         })
 
         // disconnnect
@@ -19,47 +37,47 @@ exports.init = io => {
 
         // send chat msg
         socket.on('send-chat-message', async message => {
+            console.log(message)
             socket.broadcast.emit('chat-message', {
                 username: users[socket.id],
                 message: message
             })
         })
+    })
+}
 
-        // send commands containing a '/'
-        socket.on('send-command-message', async message => {
-            if (message[0] === '/') {
-            message = await executeCommand(message)
+exports.chat = io => {  
+    io.on('connection', (socket) => {
+        
 
+        // new user
+        socket.on('new-user', username => {
+            users[socket.id] = username
+            console.log(socket.id)
+
+            socket.broadcast.emit('user-joined', username)    
+        })
+
+        // disconnnect
+        socket.on('disconnect', () => {
+            socket.broadcast.emit('user-left', users[socket.id])
+            delete users[socket.id]
+        })
+
+        // send chat msg
+        socket.on('send-chat-message', async message => {
             console.log(message)
-
-            // show command result to self
-            socket.emit('command-message', {
+            socket.broadcast.emit('chat-message', {
                 username: users[socket.id],
-                message: message,
-                actor: 'self'
+                message: message
             })
-
-            // broadcast command result to others
-            socket.broadcast.emit('command-message', {
-                username: users[socket.id],
-                message: message,
-                actor: 'member'
-            })
-            }
         })
     })
 }
 
-function executeCommand(command) {
-    const commands = {
-        '/giphy': api.getRandomGiphy()
-    }
+// const room = io.of('/room/1')
 
-    return commands[command]
-}
-
-//  ROOMS
-//socket.join('me room');
+// socket.join('me room');
 // socket.emit('message', {
 //     that: 'only'
 //   , '/chat': 'will get'

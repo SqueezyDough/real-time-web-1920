@@ -26,7 +26,6 @@ let generateRandomString = function(length) {
   }
   
 let stateKey = 'spotify_auth_state'
-let storeAccessToken = ''
 
 exports.login = function(req, res) {
     let state = generateRandomString(16)
@@ -85,7 +84,7 @@ exports.callback = function(req, res) {
                     json: true
                 }
 
-                storeAccessToken = access_token
+                res.cookie('access_token', access_token)
         
                 // use the access token to access the Spotify Web API
                 request.get(options, function(error, response, body) {
@@ -123,12 +122,25 @@ exports.refreshToken = function (req, res) {
 
     request.post(authOptions, function(error, response, body) {
         if (!error && response.statusCode === 200) {
-        let access_token = body.access_token
-        res.send({
-            'access_token': access_token
-        })
+            let access_token = body.access_token
+            res.send({
+                'access_token': access_token
+            })
         }
     })
 }
 
-console.log('globalAccessToken', storeAccessToken)
+exports.getPlayList = function(req, res) {
+    const spotifyApi = new SpotifyWebApi({
+        accessToken: req.cookies.access_token
+    })
+
+    return spotifyApi.searchTracks('artist:Love').then(
+        function(data) {
+          console.log(data.body.tracks.items);
+        },
+        function(err) {
+          console.log('Something went wrong!', err);
+        }
+    )
+}
