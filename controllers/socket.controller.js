@@ -2,8 +2,6 @@ const api = require('./api.controller')
 const users = {}
 
 exports.init = io => {  
-    console.log('init')
-
     const chat = io.of('/room')
 
     chat.on('connection', (socket) => {
