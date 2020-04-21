@@ -1,15 +1,30 @@
-const socket = io('/room/1'),
+const socket = io(),
       messageContainer = document.getElementById('message-container'),
       messageForm = document.getElementById('send-container'),
       messageInput = document.getElementById('message-input'),
-      username = prompt('What is your username?') || 'Anonymous'
+     
 
 export function init() {
     console.log('init game client')
 
-    appendMessage(`You joined as ${username}`, 'server')
+    if (messageForm) {
+        const username = prompt('What is your username?') || 'Anonymous'
+        appendMessage(`You joined as ${username}`, 'server')
+        socket.emit('new-user', username)
+
+        messageForm.addEventListener('submit', e => {
+            e.preventDefault()
+            const message = messageInput.value
+            const actor = 'self'
     
-    socket.emit('new-user', username)
+            appendMessage(`You: ${message}`, actor)
+            socket.emit('send-chat-message', message)
+    
+            // empty message input after being sent
+            messageInput.value = ''
+        })  
+    }
+   
 
     socket.on('user-joined', username => {
         const actor = 'server'
@@ -21,23 +36,18 @@ export function init() {
         appendMessage(`${username} has left`, actor)
     });
 
+    socket.on('message', message => {
+        console.log(message)
+    });
+
+
     socket.on('chat-message', data => {
         console.log(data)
         const actor = 'member'
         appendMessage(`${data.username}: ${data.message}`, actor)
     });
 
-    messageForm.addEventListener('submit', e => {
-        e.preventDefault()
-        const message = messageInput.value
-        const actor = 'self'
-
-        appendMessage(`You: ${message}`, actor)
-        socket.emit('send-chat-message', message)
-
-        // empty message input after being sent
-        messageInput.value = ''
-    })  
+   
 }
 
 function appendMessage(message, actor) {
