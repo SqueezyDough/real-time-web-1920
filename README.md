@@ -14,7 +14,7 @@ Persistant data is used for data that is immutable. This data does not need to b
 - Finished games are saved in a MongoDB with the end results
 
 ### Non-persistant data
-Data on the server is used for running processes
+Data on the server is used for running processes. The data is likely to change and important for running processes.
 
 - Running game rooms are stored on the server and cleared when finished
 
