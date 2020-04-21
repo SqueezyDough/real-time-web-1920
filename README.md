@@ -14,7 +14,7 @@ Persistant data is used for data that is immutable. This data does not need to b
 - Finished games are saved in a MongoDB with the end results
 
 ### Non-persistant data
-Data on the server is used for running sessions
+Data on the server is used for running processes
 
 - Running game rooms are stored on the server and cleared when finished
 
@@ -22,7 +22,7 @@ Data on the server is used for running sessions
 
 ## Features
 - User can join a room to start a game
-- A room can have up to 5 users
+- A room can have up to 5 users. Other users join as spectator
 - The host can select a playlist
 - Players score points when they guess a song right
 - After each round the score will be updated
