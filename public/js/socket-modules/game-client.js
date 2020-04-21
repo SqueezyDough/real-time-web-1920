@@ -1,16 +1,15 @@
 const socket = io(),
       messageContainer = document.getElementById('message-container'),
+      roomContainer = document.getElementById('room-container'),
       messageForm = document.getElementById('send-container'),
-      messageInput = document.getElementById('message-input'),
+      messageInput = document.getElementById('message-input')
      
 
 export function init() {
-    console.log('init game client')
-
     if (messageForm) {
         const username = prompt('What is your username?') || 'Anonymous'
         appendMessage(`You joined as ${username}`, 'server')
-        socket.emit('new-user', username)
+        socket.emit('new-user', roomName, username)
 
         messageForm.addEventListener('submit', e => {
             e.preventDefault()
@@ -18,13 +17,12 @@ export function init() {
             const actor = 'self'
     
             appendMessage(`You: ${message}`, actor)
-            socket.emit('send-chat-message', message)
+            socket.emit('send-chat-message', roomName, message)
     
             // empty message input after being sent
             messageInput.value = ''
         })  
     }
-   
 
     socket.on('user-joined', username => {
         const actor = 'server'
@@ -36,18 +34,23 @@ export function init() {
         appendMessage(`${username} has left`, actor)
     });
 
-    socket.on('message', message => {
-        console.log(message)
-    });
+    socket.on('room-created', room => {
+        const roomElement = document.createElement('div')
+        roomElement.innerHTML = room
 
+        const roomLink = document.createElement('a')
+        roomLink.href = `/${room}`
+        roomLink.innerText = 'Join'
+
+        roomContainer.append(roomElement)
+        roomContainer.append(roomLink)
+    })
 
     socket.on('chat-message', data => {
         console.log(data)
         const actor = 'member'
         appendMessage(`${data.username}: ${data.message}`, actor)
     });
-
-   
 }
 
 function appendMessage(message, actor) {

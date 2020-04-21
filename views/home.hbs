@@ -1,17 +1,12 @@
 <h1>Join a room</h1>
 
-<section id="roomContainer">
-    
-    <form action="/room" method="POST">
+ <form action="/room" method="POST">
         <input name="room" type="text" required>
         <button type="submit">New room</button>
-    </form>
+</form>
 
-    <div>
-        {{#each rooms}}
-            {{@key}}
-
-            <a href='/{{@key}}'>{{@key}}</a>
-        {{/each}}
-    </div>
+<section id="room-container">
+    {{#each rooms}}
+        {{@key}} <a href='/{{@key}}'>Join</a>
+    {{/each}}
 </section>
