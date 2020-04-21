@@ -4,7 +4,7 @@ For this course I am building a guessing game where players try to guess songs a
 ------
 
 ## Data life cycle diagram
-![DLC](https://user-images.githubusercontent.com/33430653/79760836-e9a02480-8320-11ea-8563-d67f2a840f92.png)
+![DLC](https://user-images.githubusercontent.com/33430653/79844094-81eae780-83bb-11ea-8d4e-38dc2f0f8e60.png)
 
 ------
 
