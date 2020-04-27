@@ -1,0 +1,11 @@
+.text-input {
+    padding: .5rem 1rem;
+    border: 1px solid white;
+    border-radius: 2px;
+    opacity: .2;
+    transition: opacity .2s;
+
+    &:focus, &:hover {
+        opacity: .7;       
+    }
+}

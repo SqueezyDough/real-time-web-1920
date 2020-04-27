@@ -1,0 +1,17 @@
+.room-container__list {
+    padding: 0;
+    list-style-type: none;
+    margin-bottom: 6rem;
+}
+
+.room-container__list__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .3rem 0;
+    border-bottom: 1px solid $grey;
+}
+
+.room-name {
+    text-transform: uppercase;
+}
