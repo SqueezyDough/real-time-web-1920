@@ -5,7 +5,8 @@ const express = require('express'),
       cookieParser = require('cookie-parser'),
       exphbs = require('express-handlebars'),
       bodyParser = require('body-parser'),
-      router = require('./routes/index.router'),
+      router = require('./routes/index.routes'),
+      spotifyRouter = require('./routes/spotify.routes'),
       app = express(),
       server = require('http').createServer(app),
       io = require('socket.io')(server),
@@ -20,6 +21,7 @@ app
     .use(cors())
     .use(cookieParser())
     .use(bodyParser.urlencoded({ extended: false }))
+    .use('/', spotifyRouter)
     .set('view engine', 'hbs')
     .engine('hbs', exphbs({
         extname: '.hbs',
@@ -28,8 +30,4 @@ app
     }))
 
 server.listen(port, () => console.log(`Listening on port ${port}!`))
-
 router.init(app, io)
-
-
-// socket.init(io)

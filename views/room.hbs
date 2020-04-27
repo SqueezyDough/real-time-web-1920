@@ -1,8 +1,24 @@
-<h1>Room</h1>
+<h1>{{roomName}}</h1>
 
-<div class="message-container" id="message-container"></div>
 
-<form id="send-container" class="send-container">
-    <input id="message-input" class="message-input" type="text" placeholder="type your message">
-    <button class="btn -primary" type="submit">Send</button>
-</form>
+<audio controls>
+    <source src="{{room.playlist.preview_url}}" type="audio/ogg">
+    Your browser does not support the audio tag.
+</audio>
+
+<section class="users">
+    <ul>
+        {{#each room.users}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ul>
+</section>
+
+<section class="messages">
+    <div class="message-container" id="message-container"></div>
+
+    <form id="send-container" class="send-container">
+        <input id="message-input" class="message-input" type="text" placeholder="type your message">
+        <button class="btn -primary" type="submit">Send</button>
+    </form>
+</section>

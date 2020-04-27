@@ -1,4 +1,7 @@
-// const spotifyAPi = require('./spotify-api.controller')
+const url = require('url');
+const querystring = require('querystring');
+const spotifyApi = require('./spotify-api.controller')
+
 const rooms = {}
 
 exports.init = io => {  
@@ -33,7 +36,7 @@ exports.init = io => {
     })
 }
 
-exports.home = (req, res, io) => {
+exports.home = (req, res) => {
     res.render('home', { rooms: rooms })
 }
 
@@ -42,15 +45,28 @@ exports.room = (req, res, io) => {
         return res.redirect('/')
     }
 
-    res.render('room', { roomName: req.params.room })
+    console.log(rooms)
+
+    res.render('room', { 
+        room: rooms[req.params.room],
+        roomName: req.params.room 
+    })
 }
 
-exports.addRoom = (req, res, io) => {
+exports.addRoom = async (req, res, io) => {
     if (rooms[req.body.room] != null) {
         return res.redirect('/')
     }
 
-    rooms[req.body.room] = { users: {} }
+    const query = 'artist:Love'
+    const playlist = await spotifyApi.getPlayList(req, query)
+
+    console.log(playlist[0])
+
+    rooms[req.body.room] = { 
+        users: {},
+        playlist: playlist[0]
+    }
     res.redirect(req.body.room)
 
     io.emit('room-created', req.body.room)

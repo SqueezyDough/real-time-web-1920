@@ -130,17 +130,13 @@ exports.refreshToken = function (req, res) {
     })
 }
 
-exports.getPlayList = function(req, res) {
+exports.getPlayList = function(req, query) {
     const spotifyApi = new SpotifyWebApi({
         accessToken: req.cookies.access_token
     })
 
-    return spotifyApi.searchTracks('artist:Love').then(
-        function(data) {
-          console.log(data.body.tracks.items);
-        },
-        function(err) {
-          console.log('Something went wrong!', err);
-        }
+    return spotifyApi.searchTracks(query).then(
+        data =>  data.body.tracks.items,
+        err => console.log('Something went wrong!', err)
     )
 }

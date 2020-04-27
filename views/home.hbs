@@ -6,7 +6,10 @@
             {{#each rooms}}
                 <li class="room-container__list__item">
                     <span class="room-name">{{@key}}</span> <a class="btn -secondary join-room" href='/{{@key}}'>Join</a>
-                </li>       
+                </li>    
+
+                {{else}}
+                <span>No available rooms</span>   
             {{/each}}
         </ul>
     </section>

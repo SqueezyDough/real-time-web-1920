@@ -6,7 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/dist/site.css">
     <script>
+        const currentSong = '{{ room.playlist.preview_url }}'
         const roomName = '{{ roomName }}'
+
+        console.log(currentSong)
     </script>
     <script defer src="/socket.io/socket.io.js"></script>
     <script defer type="module" src="/js/index.js"></script>
