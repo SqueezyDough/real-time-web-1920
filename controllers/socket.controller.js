@@ -20,16 +20,21 @@ exports.init = io => {
         // disconnnect
         socket.on('disconnect', () => {   
             getUserRooms(socket).forEach(room => {
-                console.log(room)
                 socket.to(room).broadcast.emit('user-left', rooms[room].users[socket.id])
                 delete rooms[room].users[socket.id]
             })   
         })
 
         // send chat msg
-        socket.on('send-chat-message', async (room, message) => {
-            socket.to(room).broadcast.emit('chat-message', {
-                username: rooms[room].users[socket.id],
+        socket.on('send-chat-message', async (roomName, message) => {
+            const room = rooms[roomName]
+            const currentSong = room.playlist[room.gameState.songIndex]
+            const correctArtist = isCorrectArtist(message, currentSong.artists)
+
+            console.log(correctArtist)
+
+            socket.to(roomName).broadcast.emit('chat-message', {
+                username: rooms[roomName].users[socket.id],
                 message: message
             })
         })
@@ -46,11 +51,12 @@ exports.room = (req, res, io) => {
     }
 
     const room = rooms[req.params.room]
+    const currentSong = room.playlist[room.gameState.songIndex]
 
     res.render('room', { 
         roomName: req.params.room,
         users: room.users,
-        currentSong: room.playlist[room.gameState.songIndex].preview_url
+        currentSongUrl: currentSong.preview_url,
     })
 }
 
@@ -81,4 +87,16 @@ function getUserRooms(socket) {
         if (room.users[socket.id] != null) names.push(name)
         return names
     }, [])
+}
+
+
+// TODO: let this functio test all answers
+function isCorrectArtist(answer, artists) {
+    const correctAnswers = getArtistsNames(artists)
+    console.log(correctAnswers)
+    return correctAnswers.some(correctAnswer => correctAnswer === answer.toLowerCase())
+}
+
+function getArtistsNames(artists) {
+    return artists.map(artist => artist.name.toLowerCase())
 }

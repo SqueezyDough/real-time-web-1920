@@ -66,3 +66,9 @@ function appendMessage(message, actor) {
 function scrollToBottom() {
     window.scrollTo(0, messageContainer.scrollHeight);
 }
+
+const player = document.getElementById('player')
+
+player.addEventListener('ready', e => {
+    e.target.play();
+}) 
