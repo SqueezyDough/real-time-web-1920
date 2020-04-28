@@ -45,11 +45,12 @@ exports.room = (req, res, io) => {
         return res.redirect('/')
     }
 
-    console.log(rooms)
+    const room = rooms[req.params.room]
 
     res.render('room', { 
-        room: rooms[req.params.room],
-        roomName: req.params.room 
+        roomName: req.params.room,
+        users: room.users,
+        currentSong: room.playlist[room.gameState.songIndex].preview_url
     })
 }
 
@@ -61,14 +62,16 @@ exports.addRoom = async (req, res, io) => {
     const query = 'artist:Love'
     const playlist = await spotifyApi.getPlayList(req, query)
 
-    console.log(playlist[0])
-
     rooms[req.body.room] = { 
         users: {},
-        playlist: playlist[0]
+        playlist: playlist,
+        gameState: {
+            state: 'pending',
+            songIndex: 0
+        }   
     }
-    res.redirect(req.body.room)
 
+    res.redirect(req.body.room)
     io.emit('room-created', req.body.room)
 }
 

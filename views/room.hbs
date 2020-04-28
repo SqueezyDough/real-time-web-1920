@@ -2,13 +2,13 @@
 
 
 <audio controls>
-    <source src="{{room.playlist.preview_url}}" type="audio/ogg">
+    <source src="{{currentSong}}" type="audio/ogg">
     Your browser does not support the audio tag.
 </audio>
 
 <section class="users">
     <ul>
-        {{#each room.users}}
+        {{#each users}}
             <li>{{this}}</li>
         {{/each}}
     </ul>
