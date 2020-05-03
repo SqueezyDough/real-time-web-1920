@@ -1,7 +1,4 @@
-const url = require('url');
-const querystring = require('querystring');
 const spotifyApi = require('./spotify-api.controller')
-
 const rooms = {}
 
 exports.init = io => {  
@@ -42,12 +39,16 @@ exports.init = io => {
 }
 
 exports.home = (req, res) => {
-    res.render('home', { rooms: rooms })
+    res.render('home')
+}
+
+exports.rooms = (req, res) => {
+    res.render('rooms', { rooms: rooms })
 }
 
 exports.room = (req, res, io) => {
     if (rooms[req.body.room] != null) {
-        return res.redirect('/')
+        return res.redirect('/rooms')
     }
 
     const room = rooms[req.params.room]
@@ -62,7 +63,7 @@ exports.room = (req, res, io) => {
 
 exports.addRoom = async (req, res, io) => {
     if (rooms[req.body.room] != null) {
-        return res.redirect('/')
+        return res.redirect('/rooms')
     }
 
     const query = 'artist:Love'

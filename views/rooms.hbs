@@ -1,0 +1,22 @@
+<div class="wrapper">
+    <h1>Join a room</h1>
+
+    <section id="room-container" class="room-container">
+        <ul class="room-container__list">
+            {{#each rooms}}
+                <li class="room-container__list__item">
+                    <span class="room-name">{{@key}}</span> <a class="btn -secondary join-room" href='/{{@key}}'>Join</a>
+                </li>    
+
+                {{else}}
+                <span>No available rooms</span>   
+            {{/each}}
+        </ul>
+    </section>
+
+    <form action="/room" method="POST" class="form -add-room">
+        <input class="text-input" name="room" type="text" placeholder="Enter a room name" required>
+        <button type="submit" class="btn -primary">Create room</button>
+    </form>
+</div>
+
