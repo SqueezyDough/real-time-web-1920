@@ -37,7 +37,7 @@ h1, h2, h3 {
 
 .wrapper {
   max-width: 40rem;
-  margin: 25% auto 0; }
+  margin: 10rem auto 0; }
 
 .site-header {
   margin-bottom: 4rem;
@@ -123,15 +123,15 @@ h1, h2, h3 {
 
 .message {
   max-width: 45%;
-  padding: 1rem;
+  padding: .5rem;
   margin: .5rem 0;
   background-color: #FFFFFF12;
-  border-radius: 2px;
-  word-wrap: break-word; }
+  border-radius: 2px; }
   .message.-server {
     text-transform: uppercase;
     font-family: "Inconsolata-bold", monospace;
-    padding: 0; }
+    padding: 0;
+    color: yellow; }
   .message.-self {
     align-self: flex-end;
     background-color: #06584f; }
@@ -146,8 +146,10 @@ h1, h2, h3 {
 
 .game-info {
   padding: 2rem;
+  height: 100vh;
   min-height: 100vh;
   min-width: 20rem;
+  overflow-y: auto;
   background-color: #FFFFFF12; }
 
 .game-container {

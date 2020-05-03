@@ -32,16 +32,16 @@
 
 .message {
     max-width: 45%;
-    padding: 1rem;
+    padding: .5rem;
     margin: .5rem 0;
     background-color: #FFFFFF12;
     border-radius: 2px;
-    word-wrap: break-word;
 
     &.-server {
         text-transform: uppercase;
         font-family: $contrast-font-family;
         padding: 0;
+        color: yellow
     }
 
     &.-self {
@@ -64,8 +64,10 @@
 
 .game-info {
     padding: 2rem;
+    height: 100vh;
     min-height: 100vh;
     min-width: 20rem;
+    overflow-y: auto;
     background-color: #FFFFFF12;
 }
 

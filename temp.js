@@ -8,9 +8,7 @@ exports.init = io => {
             socket.join(room)
 
             if (rooms[room]) {
-                rooms[room].users[socket.id] = {
-                    username: username
-                }
+                rooms[room].users[socket.id] = username
             }
 
             socket.to(room).broadcast.emit('user-joined', username)    
@@ -29,22 +27,21 @@ exports.init = io => {
             const room = rooms[roomName]
             const currentSong = room.playlist[room.gameState.songIndex]
             const correctArtist = isCorrectArtist(message, currentSong.artists)
-            const currentUserId = socket.id
 
-            if (correctArtist) {
-                if (!isInGuessedSongList(roomName, currentUserId, currentSong.name)) {
-                    const updatedUserScore = updateScore(roomName, currentUserId, 100)
-                    const updatedUser = updateUserSongList(updatedUserScore, currentSong.name)
-                    
-                    // send score correct message
-                    io.in(roomName).emit('update-score', updatedUser)
-                }        
-            } else {
-                socket.to(roomName).broadcast.emit('chat-message', {
-                    username: rooms[roomName].users[socket.id],
-                    message: message
-                })
-            }         
+            console.log(correctArtist)
+
+            if (isCorrectArtist) {
+                const currentUserId = socket.id
+
+                console.log('guesseduser', currentUserId)
+
+                updateScore(roomName, currentUserId, 100)
+            }
+
+            socket.to(roomName).broadcast.emit('chat-message', {
+                username: rooms[roomName].users[socket.id],
+                message: message
+            })
         })
     })
 }
@@ -116,37 +113,14 @@ function getUserRooms(socket) {
 function updateScore(roomName, userId, score) {
     const user = rooms[roomName].users[userId]
 
+    console.log('user', user)
+    console.log('room', rooms[roomName])
+
     if (!user.score) {
         user.score = 0       
     }
 
     user.score += score
-
-    return user
-}
- 
-function updateUserSongList(user, songName) {
-    if (user.guessedSongs) {
-        user.guessedSongs.push(songName)
-    } else {
-        user.guessedSongs = [songName]
-    }
-
-    console.log('user', user)
-
-    return user
-}
-
-function isInGuessedSongList(roomName, userId, songName) {
-    const user = rooms[roomName].users[userId]
-
-    console.log(user.guessedSongs)
-
-    if (user.guessedSongs) {       
-        return user.guessedSongs.includes(songName)
-    }
-
-    return false
 }
 
 // TODO: let this functio test all answers

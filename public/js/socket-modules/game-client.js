@@ -22,16 +22,16 @@ export function init() {
             // empty message input after being sent
             messageInput.value = ''
         })  
-    }
+    } 
 
     socket.on('user-joined', username => {
         const actor = 'server'
         appendMessage(`${username} has joined`, actor)
     });
 
-    socket.on('user-left', username => {
+    socket.on('user-left', user => {
         const actor = 'server'
-        appendMessage(`${username} has left`, actor)
+        appendMessage(`${user.username} has left`, actor)
     });
 
     socket.on('room-created', room => {
@@ -49,9 +49,13 @@ export function init() {
     socket.on('chat-message', data => {
         console.log(data)
         const actor = 'member'
-        appendMessage(`${data.username}: ${data.message}`, actor)
+        appendMessage(`${data.username.username}: ${data.message}`, actor)
     });
 }
+
+socket.on('update-score', user => {
+    console.log(user)
+})
 
 function appendMessage(message, actor) {
     const elMessage = document.createElement('div')

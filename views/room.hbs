@@ -6,7 +6,17 @@
             <h2>Users</h2>
             <ul class="users__list">
                 {{#each users}}
-                    <li>{{this}}</li>
+                    <li>
+                        <span>{{this.username}}</span>
+
+                        {{#if this.score}}
+                        <span>{{this.score}}</span>
+
+                        {{else}}
+                        <span>0</span
+
+                        {{/if}}
+                    </li>
                 {{/each}}
             </ul>
         </div>
