@@ -29,8 +29,12 @@ export function init() {
         appendMessage(`${username} has joined`, actor)
     });
 
-    socket.on('user-left', user => {
+    socket.on('user-left', (userId, user) => {
         const actor = 'server'
+        const userListElement = document.querySelector(`.user-list__item[data-id=${userId}]`)
+
+        userListElement.remove()
+
         appendMessage(`${user.username} has left`, actor)
     });
 
@@ -53,8 +57,34 @@ export function init() {
     });
 }
 
-socket.on('update-score', user => {
-    console.log(user)
+socket.on('correct-answer', (artist, song) => {
+    const messageContainer = document.getElementById('game-message')
+
+    messageContainer.innerHTML = `
+        Correct!, this is <em>${song}</em> from <em>${artist}</em>
+    `
+})
+
+socket.on('update-users-list', (userId, username) => {
+    const listContainer = document.getElementById('users-list')
+    const usernameListElement = document.createElement('li')
+    const usernameElement = document.createElement('span')
+    const scoreElement = document.createElement('span')
+
+    usernameElement.textContent = `${username} `
+    scoreElement.classList.add('game__score')
+    usernameListElement.setAttribute('data-id', userId)
+    scoreElement.setAttribute('data-id', userId)
+    scoreElement.textContent = '0'
+
+    usernameListElement.append(usernameElement)
+    usernameListElement.append(scoreElement)
+    listContainer.append(usernameListElement)
+})
+
+socket.on('update-score', (userId, score) => {
+    const scoreElement = document.querySelector(`.game__score[data-id=${userId}]`)
+    scoreElement.textContent = score
 })
 
 function appendMessage(message, actor) {

@@ -81,6 +81,18 @@
     transform: translateY(-50%);
     font-size: 3rem;
     opacity: .5;
+
+    em {
+        text-transform: uppercase;
+        font-style: normal;
+        color: $mainThemeColor;
+        background-color: #FFFFFF12;
+    }
+}
+
+.game__score {
+    background-color: yellow;
+    color: $secondaryThemeColor;
 }
 
 .users {
@@ -91,4 +103,8 @@
 .users__list {
     padding-left: 1rem;
     list-style-type: none;
+
+    li {
+        margin-bottom: .5rem;
+    }
 }

@@ -13,13 +13,17 @@ exports.init = io => {
                 }
             }
 
-            socket.to(room).broadcast.emit('user-joined', username)    
+            // send joined message to all users except sender
+            socket.to(room).broadcast.emit('user-joined', username)   
+            
+            // update users list UI
+            io.in(room).emit('update-users-list', socket.id, username)
         })
 
         // disconnnect
         socket.on('disconnect', () => {   
             getUserRooms(socket).forEach(room => {
-                socket.to(room).broadcast.emit('user-left', rooms[room].users[socket.id])
+                io.in(room).emit('user-left', socket.id, rooms[room].users[socket.id])
                 delete rooms[room].users[socket.id]
             })   
         })
@@ -36,8 +40,11 @@ exports.init = io => {
                     const updatedUserScore = updateScore(roomName, currentUserId, 100)
                     const updatedUser = updateUserSongList(updatedUserScore, currentSong.name)
                     
-                    // send score correct message
-                    io.in(roomName).emit('update-score', updatedUser)
+                    // update score UI to all sockets
+                    io.in(roomName).emit('update-score', currentUserId, updatedUser.score)
+
+                    // send correct answer message to this socket
+                    socket.emit('correct-answer', message, currentSong.name)
                 }        
             } else {
                 socket.to(roomName).broadcast.emit('chat-message', {

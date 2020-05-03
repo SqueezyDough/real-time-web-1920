@@ -4,16 +4,16 @@
 
         <div class="users">
             <h2>Users</h2>
-            <ul class="users__list">
+            <ul id="users-list" class="users__list">
                 {{#each users}}
-                    <li>
+                    <li class="user-list__item" data-id={{@key}}>
                         <span>{{this.username}}</span>
 
                         {{#if this.score}}
-                        <span>{{this.score}}</span>
+                        <span class="game__score" data-id="{{@key}}">{{this.score}}</span>
 
                         {{else}}
-                        <span>0</span
+                        <span class="game__score" data-id="{{@key}}">0</span>
 
                         {{/if}}
                     </li>
@@ -28,7 +28,7 @@
     </section>
 
     <section class="game-container">
-        <span class="game-message">Guess the artist from the song you are hearing</span>
+        <div id="game-message" class="game-message">Guess the artist from the song you are hearing</div>
 
         <audio id="player" autoplay>
             <source src="{{currentSongUrl}}" type="audio/mp3">

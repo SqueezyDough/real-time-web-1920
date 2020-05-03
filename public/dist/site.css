@@ -161,6 +161,15 @@ h1, h2, h3 {
   transform: translateY(-50%);
   font-size: 3rem;
   opacity: .5; }
+  .game-message em {
+    text-transform: uppercase;
+    font-style: normal;
+    color: #00FFB1;
+    background-color: #FFFFFF12; }
+
+.game__score {
+  background-color: yellow;
+  color: #121522; }
 
 .users {
   margin-bottom: 1rem;
@@ -169,6 +178,8 @@ h1, h2, h3 {
 .users__list {
   padding-left: 1rem;
   list-style-type: none; }
+  .users__list li {
+    margin-bottom: .5rem; }
 
 .login-container {
   padding: 2rem;
