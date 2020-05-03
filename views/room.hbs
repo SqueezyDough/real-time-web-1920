@@ -1,23 +1,33 @@
-<h1>{{roomName}}</h1>
+<div class="room-container">
+    <section class="game-info">
+        <h1 class="room-name -game-room">{{roomName}}</h1>
 
-<audio id="player" autoplay>
-    <source src="{{currentSongUrl}}" type="audio/mp3">
-    Your browser does not support the audio tag.
-</audio>
+        <div class="users">
+            <h2>Users</h2>
+            <ul class="users__list">
+                {{#each users}}
+                    <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    
+        <div class="messages">
+             <h2>Game chat</h2>
+            <div class="message-container" id="message-container"></div>
+        </div>
+    </section>
 
-<section class="users">
-    <ul>
-        {{#each users}}
-            <li>{{this}}</li>
-        {{/each}}
-    </ul>
-</section>
+    <section class="game-container">
+        <span class="game-message">Guess the artist from the song you are hearing</span>
 
-<section class="messages">
-    <div class="message-container" id="message-container"></div>
+        <audio id="player" autoplay>
+            <source src="{{currentSongUrl}}" type="audio/mp3">
+            Your browser does not support the audio tag.
+        </audio>
 
-    <form id="send-container" class="send-container">
-        <input id="message-input" class="message-input" type="text" placeholder="type your message">
-        <button class="btn -primary" type="submit">Send</button>
-    </form>
-</section>
+        <form id="send-container" class="send-container">
+            <input id="message-input" class="message-input" type="text" placeholder="Guess the artist">
+            <button class="btn -primary" type="submit">Guess</button>
+        </form>
+    </section>
+</div>

@@ -31,10 +31,12 @@
 }
 
 .message {
-    word-wrap: break-word;
     max-width: 45%;
     padding: 1rem;
     margin: .5rem 0;
+    background-color: #FFFFFF12;
+    border-radius: 2px;
+    word-wrap: break-word;
 
     &.-server {
         text-transform: uppercase;
@@ -44,6 +46,7 @@
 
     &.-self {
         align-self: flex-end;
+        background-color: $teal;
     }
 
     &.-member {
@@ -51,8 +54,39 @@
     }
 }
 
-.video-message {
-    padding: 0;
-    width: 100%;
-    height: auto;
+.-game-room {
+    font-size: 2rem;
+}
+
+.room-container {
+    display: flex;
+}
+
+.game-info {
+    padding: 2rem;
+    min-height: 100vh;
+    min-width: 20rem;
+    background-color: #FFFFFF12;
+}
+
+.game-container {
+    padding: 2rem;
+}
+
+.game-message {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 3rem;
+    opacity: .5;
+}
+
+.users {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #FFFFFF12
+}
+
+.users__list {
+    padding-left: 1rem;
+    list-style-type: none;
 }
