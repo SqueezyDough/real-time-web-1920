@@ -55,8 +55,8 @@ Socket events that get picked up by the server (emit from client)
 
 | Event name | Trigger | Function |
 |---|---|---|
-| new-user | When a user joins a room | Add user to the room and send a message to all sockets in that room |
-| disconnect | When the user disconnects from the room | Remove the user all joined rooms and send a message to those rooms |
+| new-user | When a user joins a room | Add user to the room |
+| disconnect | When the user disconnects from the room | Remove the user from the room |
 | send-chat-message | When the user types a message | Validates the messages and decides whether it should be posted in the chat |
 | client-done | When a client has fully played the audio | Puts the corresponding userID in a queue and waits for the other users to play the next song
 
@@ -65,7 +65,16 @@ Socket events that get picked up by the client (emit from server)
 
 | Event name | Trigger | Function |
 |---|---|---|
-| | | |
+| user-joined | When a user joins a room | Send a '`user` joined' message to all users in this room |
+| user-left | When a user disconnects from the room | send a '`user` left' message to all users in this room
+| room-created | When a user creates a room | Add the room to the rooms list with a join link |
+| chat-message | When a user types  a message | Add the message to the in-game chat
+| hint-message | When the user has types `/hint` in chat | Show a hint in the in-game chat (only visible for that user)
+| update-game-message | When somethings happens related to this song / game | Show what happened
+| update-users-list | When someone joins or leaves | Add or remove the user from the list
+| update-score | When a user guessed a song | Update the leaderboard
+| watch-player-ended | When a new song is sent to the client | Tell the server the client has fully played the audio
+| send-new-song | When a new song is sent to the client | update the player `src` attribute
 
 ## Install notes
 1. Clone this repository
