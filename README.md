@@ -1,6 +1,6 @@
 # Concept
 ## Artistry.IO
-For this course I am building a real-time artist guessing game where players try to guess artists from a song that is playing and get points when they guess it right. When the players fails to guess the song, the song is stored and the players can create a playlist from them.
+For this course I am building a artist guessing game where players try to guess artists from a song that is playing and get points when they guess it right. Players have 30 seconds to guess a song util the game moves on to the next one. When the players fails to guess the song, the song is stored and the players can create a playlist from them.
 
 ------
 ## Data management
@@ -28,22 +28,27 @@ Data on the server is used for running processes. The data is likely to change a
 
 ## Features
 - [X] Multi-room support. Users can create and join seperate rooms.
-- [X] User can join a room to start a game. Multiple users can join a room
-- [X] New users can join while session has started and the correct song will be played from the playlist
+- [X] Multiple users can join a single room.
+- [X] New users can join while session has started and the correct song will be played from the playlist.
+- [X] The server has a timer for when users timeout, so other user won't need to wait on a user who might be disconnected or is not synced properly.
+- [X] Users can guess the artist from the song that is currently playing
 - [X] Songs play for 30 seconds. After everyone is ready, the next song will play.
-- [X] The server has a timer for when users timeout, so other user won't need to wait on a user who might be disconnected or is not synced properly
-- [X] Players score points when they guess a song right
-- [X] Scoreboard including user names and their score
-- [X] Players can use in-game chat
-- [X] Correct answers are hidden from the chat room
-- [X] Score more points when you are faster
-- [X] Cheat mode
+- [X] Players score points when they guess a song right.
+- [X] Scoreboard including user names and their score.
+- [X] Players can use in-game chat.
+- [X] Correct answers are hidden from the chat room.
+- [X] Score more points when you are faster.
+- [X] Cheat mode.
 - [ ] Playlists can be created from the guessed / not guessed songs
-- [ ] Game over screen with top 3
-- [ ] Hints and random songs
-- [ ] Finished games are stored in a mongoDB
+- [ ] Game over screen with top 3.
+- [ ] Hints and randomized songs.
+- [ ] Users take turns to choose a playlist.
+- [ ] Finished games are stored in a mongoDB.
 
 ------
+
+## Socket events
+
 
 ## Install notes
 1. Clone this repository
