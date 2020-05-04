@@ -2,6 +2,12 @@
 ## Artistry.IO
 For this course I am building a artist guessing game where players try to guess artists from a song that is playing and get points when they guess it right. Players have 30 seconds to guess a song util the game moves on to the next one. When the players fails to guess the song, the song is stored and the players can create a playlist from them.
 
+### Course goals
+- Deal with real-time complexity
+- Handle real-time client-server interaction
+- Handle real-time data management
+- Handle multi-user support
+
 ------
 ## Data management
 ### Data life cycle diagram
@@ -75,6 +81,22 @@ Socket events that get picked up by the client (emit from server)
 | update-score | When a user guessed a song | Update the leaderboard
 | watch-player-ended | When a new song is sent to the client | Tell the server the client has fully played the audio
 | send-new-song | When a new song is sent to the client | update the player `src` attribute
+
+## API
+### Setting up
+I am using the spotify API to fetch songs and create playlist and the Spotify-API wrapper from [thelinmichael
+](https://github.com/thelinmichael/spotify-web-api-node) for ease-of-access. The spotify API can be used for free, but you do need a spotify account to work. 
+
+The authentication works via [OAuth 2.0](https://oauth.net/articles/authentication/) delegation protocol which needs a clientID, secretID and a Redirect URI. To set this up you'll need to go to the [Spotify Developers Dasboard](https://developer.spotify.com/dashboard/) and login with your (fresh) Spotify account. From here you can create a new app. Just follow the intructions on your screen. 
+
+Once set-up you'll see your clientID and secretID. Make sure you also enter the redirect URL as this is the URL you will return to when your users are logged in and make sure you save your ClientID and secretID securely in a .env file. In the end your .env filee should look like this:
+```
+CLIENT_ID='client id'
+CLIENT_SECRET='client secret'
+REDIRECT_URI='your redirect uri'
+```
+
+**Whitelist both your development redurect URI's as your Production redirect URI's**
 
 ## Install notes
 1. Clone this repository
