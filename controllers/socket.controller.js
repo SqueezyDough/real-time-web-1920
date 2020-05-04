@@ -76,17 +76,17 @@ exports.init = io => {
             if (room.gameState.userQueue.length === 1) {
                 room.gameState.timeOut = false
 
-                setTimeout(() => {
-                    room.gameState.timeOut = true
-                }, 5000)
-
-                setTimeout(() => {
-                    if (Object.keys(room.users).length !== room.gameState.userQueue.length && room.gameState.timeOut) {
-                        console.log('timeout')
-                        room.gameState.timeOut = false
+                let duration = 5
+                const interval = setInterval(() => {
+                    duration--;
+            
+                    // trigger next round when timer is below 0
+                    if (duration === -1 && Object.keys(room.users).length !== room.gameState.userQueue.length) {
+                        clearInterval(interval);
                         triggerNextRound(io, room, roomName)
                     }
-                }, 5010)
+                }, 1000)
+
             }
 
             if (Object.keys(room.users).length === room.gameState.userQueue.length || room.gameState.timeOut) {
