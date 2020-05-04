@@ -45,6 +45,15 @@ Data on the server is used for running processes. The data is likely to change a
 
 ------
 
+## Synchronising clients
+There can be a difference in what clients are playing. For example when a user joins a room mid-song the user will hear the song from the start while the other have almost finished the song and will move on to the next. To fix this issue I had to think about synchronising the clients when a new song is sent to the client. I did that with the following methods:
+
+### User queue
+When a client has finished playing its song, it sends a message to the server. The server puts this user in a queue allong with everyone else who sent this particular message and is waiting for the next song to play. When all users from that room have joined the queue the next song will then be sent to the clients and this cycle repeats.
+
+### Set a timeout
+A user queue can help when there are just a few seconds between the client's progression, but when a user joins 10-20 seconds later the other users have to wait a long time. Therefore the first user in the queue also triggers a timeout function of 5 seconds. When this timer is reached the next song will play automatically and the users who are not yet in the queue will be synced with the others.
+
 ## Features
 - [X] Multi-room support. Users can create and join seperate rooms.
 - [X] Multiple users can join a single room.
