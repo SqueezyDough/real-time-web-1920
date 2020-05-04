@@ -38,9 +38,16 @@ exports.init = io => {
             const correctArtist = isCorrectArtist(message, currentSong.artists)
             const currentUserId = socket.id
 
-            if (correctArtist) {
+            if (message === '/hint') {
+                message = currentSong.artists.map(artist => artist.name)
+
+                console.log(message)
+          
+                // show command result to self
+                socket.emit('hint-message', message)
+            } else if (correctArtist) {
                 if (!isInGuessedSongList(roomName, currentUserId, currentSong.name)) {
-                    const updatedUserScore = updateScore(roomName, currentUserId, 100)
+                    const updatedUserScore = updateScore(roomName, currentUserId)
                     const updatedUser = updateUserSongList(updatedUserScore, currentSong.name)
                     
                     // update score UI to all sockets
@@ -73,7 +80,7 @@ exports.init = io => {
 
             if (Object.keys(room.users).length === room.gameState.userQueue.length) {
                 room.gameState.userQueue = []
-
+                room.gameState.modifier = 5
                 room.gameState.songIndex = room.gameState.songIndex + 1
 
                 let newSongUrl = room.playlist[room.gameState.songIndex].preview_url
@@ -145,7 +152,8 @@ exports.addRoom = async (req, res, io) => {
         playlist: playlist,
         gameState: {
             state: 'pending',
-            songIndex: 0
+            songIndex: 0,
+            modifier: 5
         }   
     }
 
@@ -161,14 +169,23 @@ function getUserRooms(socket) {
     }, [])
 }
 
-function updateScore(roomName, userId, score) {
+function updateScore(roomName, userId) {
     const user = rooms[roomName].users[userId]
+    const baseScore = 20
+    const modifier = rooms[roomName].gameState.modifier
+    const score = baseScore * modifier
 
     if (!user.score) {
         user.score = 0       
     }
 
+    // add score to user score
     user.score += score
+
+    // update modifier
+    if (rooms[roomName].gameState.modifier > 0) {
+        rooms[roomName].gameState.modifier = rooms[roomName].gameState.modifier - 1
+    }
 
     return user
 }

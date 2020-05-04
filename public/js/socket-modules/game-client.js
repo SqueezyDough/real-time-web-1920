@@ -54,7 +54,16 @@ export function init() {
         console.log(data)
         const actor = 'member'
         appendMessage(`${data.username.username}: ${data.message}`, actor)
-    });
+    })
+
+    socket.on('hint-message', data => {
+        console.log(data)
+        const actor = 'server'
+
+        data.forEach(hint => {
+            appendMessage(`Hint: ${hint}`, actor)
+        })  
+    })
 }
 
 socket.on('correct-answer', (artist, song) => {
