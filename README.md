@@ -35,9 +35,10 @@ Data on the server is used for running processes. The data is likely to change a
 - [X] Chat functionality
 - [X] Correct answers are hidden from the chat room
 - [X] Score more points when you are faster
+- [X] Cheat mode
 - [ ] Playlists can be created from the guessed / not guessed songs
 - [ ] Game over screen with top 3
-- [ ] Hints and random song keywords
+- [ ] Hints and random songs
 - [ ] Finished games are stored in a mongoDB
 
 ------
