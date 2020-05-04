@@ -120,6 +120,13 @@ const redirect_uri = process.env.REDIRECT_URI
 - socket.io-client
 - spotify-web-api-node
 
+## Browser support
+- Chrome
+- Firefox
+- Brave
+
+**Autoplay should be turned on**
+
 ## Install notes
 1. Clone this repository
 ```
