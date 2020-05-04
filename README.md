@@ -81,6 +81,7 @@ Socket events that get picked up by the client (emit from server)
 | update-score | When a user guessed a song | Update the leaderboard
 | watch-player-ended | When a new song is sent to the client | Tell the server the client has fully played the audio
 | send-new-song | When a new song is sent to the client | update the player `src` attribute
+| game-end | When all songs are played | Show leaderboard and change game state to `archived`
 
 ## API
 ### Setting up
