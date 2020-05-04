@@ -78,29 +78,19 @@ exports.init = io => {
 
                 setTimeout(() => {
                     room.gameState.timeOut = true
-                }, 5000);
+                }, 5000)
+
+                setTimeout(() => {
+                    if (Object.keys(room.users).length !== room.gameState.userQueue.length && room.gameState.timeOut) {
+                        console.log('timeout')
+                        room.gameState.timeOut = false
+                        triggerNextRound(io, room, roomName)
+                    }
+                }, 5010)
             }
 
             if (Object.keys(room.users).length === room.gameState.userQueue.length || room.gameState.timeOut) {
-                room.gameState.userQueue = []
-                room.gameState.modifier = 5
-                room.gameState.songIndex = room.gameState.songIndex + 1
-
-                room.gameState.timeOut = false
-
-                const gameMessage = 'Guess the artist from the song you are hearing'
-                io.in(roomName).emit('update-game-message', gameMessage)
-
-                let newSongUrl = room.playlist[room.gameState.songIndex].preview_url
-
-                // if no preview is found move on to the next one
-                if (!newSongUrl) {
-                    room.gameState.songIndex = room.gameState.songIndex + 1
-                    newSongUrl = room.playlist[room.gameState.songIndex].preview_url
-                }   
-
-                // send new song to clients
-                io.in(roomName).emit('send-new-song', newSongUrl)
+                triggerNextRound(io, room, roomName)
             }
         })
     })
@@ -165,6 +155,28 @@ exports.addRoom = async (req, res, io) => {
 
     res.redirect(req.body.room)
     io.emit('room-created', req.body.room)
+}
+
+function triggerNextRound(io, room, roomName) {
+    room.gameState.userQueue = []
+    room.gameState.modifier = 5
+    room.gameState.songIndex = room.gameState.songIndex + 1
+
+    room.gameState.timeOut = false
+
+    const gameMessage = 'Guess the artist from the song you are hearing'
+    io.in(roomName).emit('update-game-message', gameMessage)
+
+    let newSongUrl = room.playlist[room.gameState.songIndex].preview_url
+
+    // if no preview is found move on to the next one
+    if (!newSongUrl) {
+        room.gameState.songIndex = room.gameState.songIndex + 1
+        newSongUrl = room.playlist[room.gameState.songIndex].preview_url
+    }   
+
+    // send new song to clients
+    io.in(roomName).emit('send-new-song', newSongUrl)
 }
 
 // return all rooms names that a user has joined
