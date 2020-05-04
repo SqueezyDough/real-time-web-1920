@@ -54,7 +54,8 @@ exports.init = io => {
                     io.in(roomName).emit('update-score', currentUserId, updatedUser.score)
 
                     // send correct answer message to this socket
-                    socket.emit('correct-answer', message, currentSong.name)
+                    const gameMessage = `Correct!, this is <em>${currentSong.name}</em> from <em>${message}</em>`
+                    socket.emit('update-game-message', gameMessage)
                 }        
             } else {
                 socket.to(roomName).broadcast.emit('chat-message', {
@@ -82,6 +83,9 @@ exports.init = io => {
                 room.gameState.userQueue = []
                 room.gameState.modifier = 5
                 room.gameState.songIndex = room.gameState.songIndex + 1
+
+                const gameMessage = 'Guess the artist from the song you are hearing'
+                io.in(roomName).emit('update-game-message', gameMessage)
 
                 let newSongUrl = room.playlist[room.gameState.songIndex].preview_url
 

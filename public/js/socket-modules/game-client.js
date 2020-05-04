@@ -66,12 +66,9 @@ export function init() {
     })
 }
 
-socket.on('correct-answer', (artist, song) => {
+socket.on('update-game-message', (message) => {
     const messageContainer = document.getElementById('game-message')
-
-    messageContainer.innerHTML = `
-        Correct!, this is <em>${song}</em> from <em>${artist}</em>
-    `
+    messageContainer.innerHTML = message
 })
 
 socket.on('update-users-list', (userId, username) => {
