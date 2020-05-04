@@ -1,6 +1,6 @@
 # Concept
 ## Artistry.IO
-For this course I am building a artist guessing game where players try to guess artists from a song that is playing and get points when they guess it right. When the players fails to guess the song, the song is stored and the players can create a playlist from them.
+For this course I am building a real-time artist guessing game where players try to guess artists from a song that is playing and get points when they guess it right. When the players fails to guess the song, the song is stored and the players can create a playlist from them.
 
 ------
 ## Data management
@@ -27,12 +27,14 @@ Data on the server is used for running processes. The data is likely to change a
 ------
 
 ## Features
+- [X] Multi-room support. Users can create and join seperate rooms.
 - [X] User can join a room to start a game. Multiple users can join a room
 - [X] New users can join while session has started and the correct song will be played from the playlist
-- [X] Songs play for 30 seconds. After everyone is ready, the next song will play to prevent syncing issues. 
+- [X] Songs play for 30 seconds. After everyone is ready, the next song will play.
+- [X] The server has a timer for when users timeout, so other user won't need to wait on a user who might be disconnected or is not synced properly
 - [X] Players score points when they guess a song right
 - [X] Scoreboard including user names and their score
-- [X] Chat functionality
+- [X] Players can use in-game chat
 - [X] Correct answers are hidden from the chat room
 - [X] Score more points when you are faster
 - [X] Cheat mode
