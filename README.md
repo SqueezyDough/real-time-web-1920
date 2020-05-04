@@ -57,8 +57,8 @@ Socket events that get picked up by the server (emit from client)
 |---|---|---|
 | new-user | When a user joins a room | Add user to the room |
 | disconnect | When the user disconnects from the room | Remove the user from the room |
-| send-chat-message | When the user types a message | Validates the messages and decides whether it should be posted in the chat |
-| client-done | When a client has fully played the audio | Puts the corresponding userID in a queue and waits for the other users to play the next song
+| send-chat-message | When the user types a message | Handles all chat input messages. Validates the messages and decides whether it should be posted in the chat. Also checks whether the message contains the correct answer for the game and updates scores if guessed right |
+| client-done | When a client has fully played the audio | Puts the corresponding userID in a queue and waits for the other users to play the next song. Updates the game metadata accordingly
 
 ### Client
 Socket events that get picked up by the client (emit from server)
