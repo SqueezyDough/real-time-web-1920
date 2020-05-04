@@ -40,8 +40,6 @@ exports.init = io => {
 
             if (message === '/hint') {
                 message = currentSong.artists.map(artist => artist.name)
-
-                console.log(message)
           
                 // show command result to self
                 socket.emit('hint-message', message)
@@ -77,19 +75,23 @@ exports.init = io => {
             // set timeout after first user enters queue
             if (room.gameState.userQueue.length === 1) {
                 room.gameState.timeOut = false
+
+                setTimeout(() => {
+                    room.gameState.timeOut = true
+                }, 5000);
             }
 
-            if (Object.keys(room.users).length === room.gameState.userQueue.length) {
+            if (Object.keys(room.users).length === room.gameState.userQueue.length || room.gameState.timeOut) {
                 room.gameState.userQueue = []
                 room.gameState.modifier = 5
                 room.gameState.songIndex = room.gameState.songIndex + 1
+
+                room.gameState.timeOut = false
 
                 const gameMessage = 'Guess the artist from the song you are hearing'
                 io.in(roomName).emit('update-game-message', gameMessage)
 
                 let newSongUrl = room.playlist[room.gameState.songIndex].preview_url
-
-                console.log(newSongUrl)
 
                 // if no preview is found move on to the next one
                 if (!newSongUrl) {
@@ -201,15 +203,11 @@ function updateUserSongList(user, songName) {
         user.guessedSongs = [songName]
     }
 
-    console.log('user', user)
-
     return user
 }
 
 function isInGuessedSongList(roomName, userId, songName) {
     const user = rooms[roomName].users[userId]
-
-    console.log(user.guessedSongs)
 
     if (user.guessedSongs) {       
         return user.guessedSongs.includes(songName)
@@ -221,7 +219,6 @@ function isInGuessedSongList(roomName, userId, songName) {
 // TODO: let this functio test all answers
 function isCorrectArtist(answer, artists) {
     const correctAnswers = getArtistsNames(artists)
-    console.log(correctAnswers)
     return correctAnswers.some(correctAnswer => correctAnswer === answer.toLowerCase())
 }
 
