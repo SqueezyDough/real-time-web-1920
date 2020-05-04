@@ -39,6 +39,8 @@ Data on the server is used for running processes. The data is likely to change a
 - [X] Correct answers are hidden from the chat room.
 - [X] Score more points when you are faster.
 - [X] Cheat mode.
+
+### If I had more time
 - [ ] Playlists can be created from the guessed / not guessed songs
 - [ ] Game over screen with top 3.
 - [ ] Hints and randomized songs.
@@ -48,7 +50,22 @@ Data on the server is used for running processes. The data is likely to change a
 ------
 
 ## Socket events
+### Server
+Socket events that get picked up by the server (emit from client)
 
+| Event name | Trigger | Function |
+|---|---|---|
+| new-user | When a user joins a room | Add user to the room and send a message to all sockets in that room |
+| disconnect | When the user disconnects from the room | Remove the user all joined rooms and send a message to those rooms |
+| send-chat-message | When the user types a message | Validates the messages and decides whether it should be posted in the chat |
+| client-done | When a client has fully played the audio | Puts the corresponding userID in a queue and waits for the other users to play the next song
+
+### Client
+Socket events that get picked up by the client (emit from server)
+
+| Event name | Trigger | Function |
+|---|---|---|
+| | | |
 
 ## Install notes
 1. Clone this repository
