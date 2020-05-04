@@ -18,6 +18,9 @@ exports.init = io => {
             
             // update users list UI
             io.in(room).emit('update-users-list', socket.id, username)
+
+            // watch if player is done for this socket
+            socket.emit('watch-player-ended', socket.id)
         })
 
         // disconnnect
@@ -53,6 +56,40 @@ exports.init = io => {
                 })
             }         
         })
+
+        socket.on('client-done', (roomName, userId) => {
+            const room = rooms[roomName]
+
+            if (!room.gameState.userQueue) {
+                room.gameState.userQueue = []
+            }
+            
+            room.gameState.userQueue.push(userId)
+
+            // set timeout after first user enters queue
+            if (room.gameState.userQueue.length === 1) {
+                room.gameState.timeOut = false
+            }
+
+            if (Object.keys(room.users).length === room.gameState.userQueue.length) {
+                room.gameState.userQueue = []
+
+                room.gameState.songIndex = room.gameState.songIndex + 1
+
+                let newSongUrl = room.playlist[room.gameState.songIndex].preview_url
+
+                console.log(newSongUrl)
+
+                // if no preview is found move on to the next one
+                if (!newSongUrl) {
+                    room.gameState.songIndex = room.gameState.songIndex + 1
+                    newSongUrl = room.playlist[room.gameState.songIndex].preview_url
+                }   
+
+                // send new song to clients
+                io.in(roomName).emit('send-new-song', newSongUrl)
+            }
+        })
     })
 }
 
@@ -64,31 +101,35 @@ exports.rooms = (req, res) => {
     res.render('rooms', { rooms: rooms })
 }
 
-exports.room = async (req, res, io) => {
-    if (rooms[req.body.room] != null) {
-        return res.redirect('/rooms')
+exports.room = async (req, res) => {
+    if (req.params.room != 'null') {
+        if (rooms[req.body.room] != null) {
+            return res.redirect('/rooms')
+        }
+    
+        const room = rooms[req.params.room]
+        let currentSong = ''
+    
+        // find new playlist is nothing is found
+        if (room.playlist) {
+            currentSong = room.playlist[room.gameState.songIndex]
+        } else {    
+            const query = 'artist:Love'
+    
+            console.log('no playlist found, fetching new playlist...')
+    
+            room.playlist = await spotifyApi.getPlayList(req, query)
+            currentSong = room.playlist[room.gameState.songIndex]
+        }
+    
+        res.render('room', { 
+            roomName: req.params.room,
+            users: room.users,
+            currentSongUrl: currentSong.preview_url,
+        })
+    } else {
+        console.log('no room in param')
     }
-
-    const room = rooms[req.params.room]
-    let currentSong = ''
-
-    // find new playlist is nothing is found
-    if (room.playlist) {
-        currentSong = room.playlist[room.gameState.songIndex]
-    } else {    
-        const query = 'artist:Love'
-
-        console.log('no playlist found, fetching new playlist...')
-
-        room.playlist = await spotifyApi.getPlayList(req, query)
-        currentSong = room.playlist[room.gameState.songIndex]
-    }
-
-    res.render('room', { 
-        roomName: req.params.room,
-        users: room.users,
-        currentSongUrl: currentSong.preview_url,
-    })
 }
 
 exports.addRoom = async (req, res, io) => {

@@ -2,8 +2,8 @@ const socket = io(),
       messageContainer = document.getElementById('message-container'),
       roomContainer = document.getElementById('room-container'),
       messageForm = document.getElementById('send-container'),
-      messageInput = document.getElementById('message-input')
-     
+      messageInput = document.getElementById('message-input'),
+      player = document.getElementById('player')
 
 export function init() {
     if (messageForm) {
@@ -87,6 +87,24 @@ socket.on('update-score', (userId, score) => {
     scoreElement.textContent = score
 })
 
+socket.on('watch-player-ended', userId => {
+    console.log('start')   
+    player.onended = () => {
+        console.log('ended')   
+
+        socket.emit('client-done', roomName, userId)
+    }
+})
+
+socket.on('send-new-song', url => {
+    console.log('new song', url)
+    const source = document.getElementById('player')
+
+    source.setAttribute('src', url)
+    source.load()
+    source.play()
+})
+
 function appendMessage(message, actor) {
     const elMessage = document.createElement('div')
 
@@ -97,11 +115,10 @@ function appendMessage(message, actor) {
     scrollToBottom()
 }
 
+
 function scrollToBottom() {
     window.scrollTo(0, messageContainer.scrollHeight);
 }
-
-const player = document.getElementById('player')
 
 player.addEventListener('ready', e => {
     e.target.play();

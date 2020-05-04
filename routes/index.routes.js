@@ -17,7 +17,7 @@ exports.init = (app, io) => {
     })
 
     app.get('/:room', (req, res) => {
-        socket.room(req, res, io)
+        socket.room(req, res)
     }) 
 
     app.post('/room', (req, res) => {
