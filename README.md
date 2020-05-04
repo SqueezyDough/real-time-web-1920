@@ -173,5 +173,12 @@ REDIRECT_URI='your redirect uri'
 npm run start
 ```
 
-### Chat commands
+## Chat commands
 - Type `/hint` in chat to get a hint!
+
+## Known bugs
+- User list sometimes doesn't update properly
+- Room list sometimes doesn't update properly
+- Users need to login again after a while
+
+
