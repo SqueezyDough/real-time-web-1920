@@ -11,7 +11,7 @@ For this course I am building a artist guessing game where players try to guess 
 ------
 ## Data management
 ### Data life cycle diagram
-![DLC](https://user-images.githubusercontent.com/33430653/79844466-fde52f80-83bb-11ea-948d-2f46a67b4cdf.png)
+![DLC](https://user-images.githubusercontent.com/33430653/81014096-85bb4700-8e5c-11ea-9481-f8c3271d33d8.png)
 
 ------
 
