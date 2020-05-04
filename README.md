@@ -96,9 +96,52 @@ CLIENT_SECRET='client secret'
 REDIRECT_URI='your redirect uri'
 ```
 
-**Whitelist both your development redurect URI's as your Production redirect URI's**
+**Whitelist both your development redurect URI's as your Production redirect URI's!**
+
+To use the .env variables you'll need to install the [dotenv](https://www.npmjs.com/package/dotenv) npm package and usit in your app. Your server-side code should look like this:
+```
+require('dotenv').config()
+
+const client_id = process.env.CLIENT_ID
+const client_secret = process.env.CLIENT_SECRET
+const redirect_uri = process.env.REDIRECT_URI
+```
+
+## Dependancies
+- body-parser
+- cookie-parser
+- dotenv
+- express
+- express-handlebars
+- node-fetch
+- querystring
+- request
+- socket.io
+- socket.io-client
+- spotify-web-api-node
 
 ## Install notes
 1. Clone this repository
-2. Install dependancies: `npm install`
-3. Run application: `npm run start`
+```
+git clone
+```
+
+2. Install dependancies
+```
+npm install
+```
+
+3. Add a .env file and include it in your .gitignore file
+```
+CLIENT_ID='client id'
+CLIENT_SECRET='client secret'
+REDIRECT_URI='your redirect uri'
+```
+
+4. Run application
+```
+npm run start
+```
+
+### Chat commands
+- Type `/hint` in chat to get a hint!
