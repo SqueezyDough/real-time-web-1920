@@ -1,6 +1,6 @@
 # Concept
 ## Artistry.IO
-For this course I am building a artist guessing game where players try to guess artists from a song that is playing and get points when they guess it right. Players have 30 seconds to guess a song util the game moves on to the next one. When the players fails to guess the song, the song is stored and the players can create a playlist from them.
+For this course I am building a artist guessing game where players try to guess artists from a song that is playing and get points when they guess it right. Players have 30 seconds to guess a song until the game moves on to the next one. When the players fails to guess the song, the song is stored and the players can create a playlist from them.
 ![start](https://user-images.githubusercontent.com/33430653/81015877-bbadfa80-8e5f-11ea-87c0-8ccfb5c1559a.png)
 
 <details>
